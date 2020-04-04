@@ -1,91 +1,114 @@
-//DOM elements
-
-
-const resultEl = document.getElementById('result');
-const lengthEl = document.getElementById('result');
-const uppercaseEl = document.getElementById('result');
-const lowercaseEl = document.getElementById('result');
-const numberEl = document.getElementById('result');
-const symbolsEl = document.getElementById('result');
-const generateEl = document.getElementById('result');
-
-
-
-const randomFunc = {
-  lower: getRandomLower,
-  upper: getRandomUpper,
-  number: getRandomNumber,
-  symbols: getRandomsymbols
-
+var generatedPassword = "";
+function gPassword(){
+var pLength = document.getElementById("passwordLength").value
+var characterSet = "";
+if (document.getElementById("specialChecked").checked == true){
+characterSet = characterSet + "!@#$%^&*()!@#$%^&*()!@#$%^"
 }
-// method to generate a password aftering listening for the click 
-
-generateEl.addEventListener('click', () =>{
-  const length = +lengthEl.value;
-  const hasLower = lowercaseEl.checked
-  const hasUpper = uppercaseEl.checked
-  const hasNumber = numberEl.checked
-  const hasSymbols = symbolsEl.checked
-  
-
-// generated password to show up on screen 
-  resultEl.innerText= generatePassword(
-    hasLower,
-    hasUpper,
-    hasNumber,
-    hasSymbols,
-    length
-  );
-  });
-
-// generate password fucntion 
-function generatePassword( lower,upper, number, symbols,length) {
-
-var generatePassword = '';
-
-const typesCount= lower + upper + number + symbols; 
-
-// filtering out unchecked items , looping over length call geenrator function for each type
-const typesArr = [{lower}, {upper}, {number}, {symbols}].filter(
-
-  item => Object.values(item)[0]);
-
-  if (typesCount === 0) {
-  return '';
-  }
-  for( var i = 0; i < length; i += typesCount) { 
-    typesArr.forEach(type => { 
-      const funcName = Objects.keys(type)[0];
-      
-      generatePassword += randomFunc[funcName]();
-    });
-  }
-  //adding final password to pw var and return 
-  const finalPassword = generatedPassword.slice(0, length);
-
-  return finalPassword;
+if (document.getElementById("numericChecked").checked == true){
+characterSet = characterSet + "12345678901234567890123456"
+}
+if (document.getElementById("lowercaseChecked").checked == true){
+characterSet = characterSet + "qwertyuiopasdfghjklzxcvbnm"
+}
+if (document.getElementById("uppercaseChecked").checked == true){
+characterSet = characterSet + "QWERTYUIOPASDFGHJKLZXCVBNM"
+}
+var specialSet = "!@#$%^&*()"
+var numericSet = "1234567890"
+var lowercaseSet = "qwertyuiopasdfghjklzxcvbnm"
+var uppercaseSet = "QWERTYUIOPASDFGHJKLZXCVBNM"
+var passwordCheckarr = [];
+var passwordCheck = [];
+do{
+passwordCheckarr = [];
+passwordCheck = [];
+generatedPassword = '';
+for (var i = 0; i < parseInt(pLength); ++i) {
+generatedPassword += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
+}
+console.log(generatedPassword);
+if(document.getElementById("specialChecked").checked == true){
+for(let gpwi = 0; gpwi < pLength; gpwi++){
+for(let seti = 0; seti < specialSet.length; seti++){
+if(generatedPassword.charAt(gpwi) == specialSet.charAt(seti)){
+passwordCheckarr.push("true");
+}
+}
+}
+if(passwordCheckarr.includes("true") == true){
+passwordCheck.push("true");
+}
+else{
+passwordCheck.push("false");
+}
+}
+console.log(passwordCheck);
+console.log("Check Results of Generated Password: " + passwordCheckarr);
+console.log("Current Results of all checks: " + passwordCheck);
+// --------- Each section below is a check for their own character set -----------
+if(document.getElementById("numericChecked").checked == true){
+var passwordCheckarr = [];
+for(let gpwi = 0; gpwi < pLength; gpwi++){
+for(let seti = 0; seti < numericSet.length; seti++){
+if(generatedPassword.charAt(gpwi) == numericSet.charAt(seti)){
+passwordCheckarr.push("true");
+}
+}
+}
+if(passwordCheckarr.includes("true") == true){
+passwordCheck.push("true");
+}
+else{
+passwordCheck.push("false");
+}
+}
+console.log(passwordCheck);
+console.log("Check Results of Generated Password: " + passwordCheckarr);
+console.log("Current Results of all checks: " + passwordCheck);
+if(document.getElementById("lowercaseChecked").checked == true){
+var passwordCheckarr = [];
+for(let gpwi = 0; gpwi < pLength; gpwi++){
+for(let seti = 0; seti < lowercaseSet.length; seti++){
+if(generatedPassword.charAt(gpwi) == lowercaseSet.charAt(seti)){
+passwordCheckarr.push("true");
+}
+}
+}
+if(passwordCheckarr.includes("true") == true){
+passwordCheck.push("true");
+}
+else{
+passwordCheck.push("false");
+}
+}
+console.log(passwordCheck);
+console.log("Check Results of Generated Password: " + passwordCheckarr);
+console.log("Current Results of all checks: " + passwordCheck);
+// Checks every character in the generated password if it contains at least 1 uppercase character
+if(document.getElementById("uppercaseChecked").checked == true){
+var passwordCheckarr = [];
+for(let gpwi = 0; gpwi < pLength; gpwi++){
+for(let seti = 0; seti < uppercaseSet.length; seti++){
+if(generatedPassword.charAt(gpwi) == uppercaseSet.charAt(seti)){
+passwordCheckarr.push("true");
+}
+}
+}
+if(passwordCheckarr.includes("true") == true){
+passwordCheck.push("true");
+}
+else{
+passwordCheck.push("false");
+}
+}
+console.log(passwordCheck);
+console.log("Check Results of Generated Password: " + passwordCheckarr);
+console.log("Current Results of all checks: " + passwordCheck);
+console.log(passwordCheck.includes("false"));
+}while(passwordCheck.includes("false") == true)
+document.getElementById("displayPassword").value = generatedPassword;
 }
 
-//generator fucntion to get a random lower & uppercase letters, & numbers & symbols
-
-function getRandomLower(){
- return String.fromCharCode(Math.floor(Math.random() *26) + 97 );
-
-}
-
-function getRandomUpper(){
-  return String.fromCharCode(Math.floor(Math.random() *26) + 65 );
- 
- }
-
- function getRandomNumber(){
-  return String.fromCharCode(Math.floor(Math.random() * 10) + 48 );
- 
- }
- function getRandomsymbols(){
-  const symbols = '!@#$%^&*()';
-  return symbols[Math.floor(Math.random() * symbols.length)];
- 
- }
 
 
